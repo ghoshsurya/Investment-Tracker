@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/dashboard.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+</head>
+<header>
+    <h2>Portfolio Dashboard</h2>
+    <button class="toggle-btn" id="toggleTheme">Toggle Theme</button>
+</header>
+
+<body>
+    <h2>Portfolio Dashboard</h2>
+    <table border="1">
+        <tr>
+            <th>Symbol</th>
+            <th>Quantity</th>
+            <th>Price (USD)</th>
+            <th>Value (USD)</th>
+            <th>Sentiment</th>
+        </tr>
+        {% for stock in portfolio %}
+        <tr>
+            <td>{{ stock.symbol }}</td>
+            <td>{{ stock.quantity }}</td>
+            <td>{{ stock.price }}</td>
+            <td>{{ stock.value }}</td>
+            <td>{{ stock.sentiment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Total Portfolio Value: ${{ total_value }}</h3>
+    <a href="/">Add More</a>
+    <div class="chart-container">
+    <canvas id="portfolioChart"></canvas>
+</div>
+
+</body>
+
+
+
+<script>
+  const toggleBtn = document.getElementById("toggleTheme");
+
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light");
+    localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light");
+    }
+  });
+</script>
+
+</html>
